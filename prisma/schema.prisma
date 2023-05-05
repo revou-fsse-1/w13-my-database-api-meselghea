@@ -11,11 +11,8 @@ datasource db {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  name        String
-  price       Float
-  description String
-  image       String
-  createAd    DateTime @default(now())
-  updateAd    DateTime @default(now())
+  id    Int    @id @default(autoincrement())
+  name  String
+  price Int
+  stock Int
 }

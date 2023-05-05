@@ -1,29 +1,23 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaService } from './prisma/prisma.service';
+//import { PrismaService } from './prisma/prisma.service';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
+import { ProductsModule } from './products/products.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { PrismaService } from './prisma/prisma.service';
+import { SellerModule } from './seller/seller.module';
+
 @Module({
   imports: [
-    GraphQLModule.forRootAsync({
+    GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      useFactory: (config: ConfigService) => {
-        return {
-          cors: {
-            origin:config.get('CLIENT_URL'),
-          },
-          autoSchemaFile: join(
-            process.cwd(),
-            config.get<string>('SCHEMA_PATH'),
-          ),
-          sortSchema: true,
-          playground: true,
-        }
-      }
+      autoSchemaFile: join(process.cwd(), 'src/scema.gql'),
+      buildSchemaOptions: { dateScalarMode: 'timestamp' },
     }),
+    ProductsModule,
+    SellerModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
