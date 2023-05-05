@@ -10,9 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Seller {
+  id       Int       @id @default(autoincrement())
+  name     String
+  products Product[]
+}
+
 model Product {
-  id    Int    @id @default(autoincrement())
-  name  String
-  price Int
-  stock Int
+  id       Int      @id @default(autoincrement())
+  name     String
+  price    Int
+  quantity Int
+  Location Seller[]
 }
