@@ -1,4 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { query } from 'express';
+import { stringify } from 'querystring';
 import { CreateProductInput, UpdateProductInput } from 'src/types/graphql';
 import { ProductService } from './product.service';
 
@@ -13,7 +15,7 @@ export class ProductResolver {
 
   @Query('products')
   findAll() {
-    return this.productService.findAll();
+    return this.productService.findAll('string');
   }
 
   @Query('product')

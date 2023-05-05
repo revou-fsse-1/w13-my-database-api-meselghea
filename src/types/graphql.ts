@@ -12,7 +12,7 @@ export class CreateProductInput {
     name: string;
     price: number;
     quantity: number;
-    Location?: Nullable<string>;
+    location: Seller[];
 }
 
 export class UpdateProductInput {
@@ -22,17 +22,28 @@ export class UpdateProductInput {
     quantity: number;
 }
 
+export class CreateSellerInput {
+    name: string;
+}
+
+export class UpdateSellerInput {
+    id: number;
+}
+
 export class Product {
     id: number;
     name: string;
     price: number;
     quantity: number;
+    location: Seller[];
 }
 
 export abstract class IQuery {
     abstract products(): Nullable<Product>[] | Promise<Nullable<Product>[]>;
 
     abstract product(id: number): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract seller(id: number): Nullable<Seller> | Promise<Nullable<Seller>>;
 }
 
 export abstract class IMutation {
@@ -41,6 +52,16 @@ export abstract class IMutation {
     abstract updateProduct(updateProductInput: UpdateProductInput): Product | Promise<Product>;
 
     abstract removeProduct(id: number): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract createSeller(createSellerInput: CreateSellerInput): Seller | Promise<Seller>;
+
+    abstract removeSeller(id: number): Nullable<Seller> | Promise<Nullable<Seller>>;
+}
+
+export class Seller {
+    id: number;
+    name: string;
+    products: Product[];
 }
 
 type Nullable<T> = T | null;

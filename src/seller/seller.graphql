@@ -1,0 +1,22 @@
+type Seller {
+  id: Int!
+  name: String!
+  products: [Product!]!
+}
+
+input CreateSellerInput {
+  name: String!
+}
+
+input UpdateSellerInput {
+  id: Int!
+}
+
+type Query {
+  seller(id: Int!): Seller
+}
+
+type Mutation {
+  createSeller(createSellerInput: CreateSellerInput!): Seller!
+  removeSeller(id: Int!): Seller
+}
