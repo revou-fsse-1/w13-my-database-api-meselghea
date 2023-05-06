@@ -12,7 +12,7 @@ export class CreateProductInput {
     name: string;
     price: number;
     quantity: number;
-    location: Seller[];
+    location?: Nullable<string>;
 }
 
 export class UpdateProductInput {
@@ -35,7 +35,7 @@ export class Product {
     name: string;
     price: number;
     quantity: number;
-    location: Seller[];
+    location?: Nullable<string>;
 }
 
 export abstract class IQuery {

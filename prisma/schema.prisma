@@ -14,9 +14,10 @@ model Seller {
 }
 
 model Product {
-  id       Int      @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   name     String
   price    Int
   quantity Int
-  Location Seller[]
+  sellerId Int
+  seller   Seller @relation(fields: [sellerId], references: [id])
 }
