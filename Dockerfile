@@ -1,29 +1,51 @@
+# syntax = docker/dockerfile:1
 
-FROM node:16-alpine as builder
+# Adjust NODE_VERSION as desired
+ARG NODE_VERSION=18.14.2
+FROM node:${NODE_VERSION}-slim as base
 
-ENV NODE_ENV build
+LABEL fly_launch_runtime="NodeJS/Prisma"
 
-USER node
-WORKDIR /home/node
+# NodeJS/Prisma app lives here
+WORKDIR /app
 
-COPY package*.json ./
-RUN npm ci
+# Set production environment
+ENV NODE_ENV=production
 
-COPY --chown=node:node . .
-RUN npm run build \
-    && npm prune --production
 
-# ---
+# Throw-away build stage to reduce size of final image
+FROM base as build
 
-FROM node:16-alpine
+# Install packages needed to build node modules
+RUN apt-get update -qq && \
+    apt-get install -y python-is-python3 pkg-config build-essential openssl 
 
-ENV NODE_ENV production
+# Install node modules
+COPY --link package.json package-lock.json 
+RUN npm install --production=false
 
-USER node
-WORKDIR /home/node
+# Generate Prisma Client
+COPY --link prisma .
+RUN npx prisma generate
 
-COPY --from=builder --chown=node:node /home/node/package*.json ./
-COPY --from=builder --chown=node:node /home/node/node_modules/ ./node_modules/
-COPY --from=builder --chown=node:node /home/node/dist/ ./dist/
+# Copy application code
+COPY --link . .
 
-CMD ["node", "dist/server.js"]
+# Build application
+RUN npm run build
+
+# Remove development dependencies
+RUN npm prune --production
+
+
+# Final stage for app image
+FROM base
+
+# Copy built application
+COPY --from=build /app /app
+
+# Entrypoint prepares the database.
+ENTRYPOINT ["/app/docker-entrypoint"]
+
+# Start the server by default, this can be overwritten at runtime
+CMD [ "npm", "run", "start" ]
