@@ -16,11 +16,11 @@ export class ProductService {
       },
     });
   }
-  create({ name, price, quantity, location }: CreateProductInput) {
+  create({ name, price, quantity, location}: CreateProductInput) {
     return this.prisma.product.create({
-      data: { name, price, quantity, location },
-      
-    });
+      data: { name, price, quantity, location}
+      });
+
 }
 
 
