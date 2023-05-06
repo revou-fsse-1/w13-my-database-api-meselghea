@@ -3,14 +3,14 @@ type Product {
   name: String!
   price: Int!
   quantity: Int!
-  location: String
+  sellers: Int
 }
 
 input CreateProductInput {
   name: String!
   price: Int!
   quantity: Int!
-  location: String
+  sellerId: Int
 }
 
 input UpdateProductInput {

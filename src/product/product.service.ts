@@ -5,9 +5,9 @@ import { CreateProductInput, UpdateProductInput } from 'src/types/graphql';
 @Injectable()
 export class ProductService {
   constructor(private prisma: PrismaService) {}
-  create({ name, price, quantity }: CreateProductInput) {
+  create({ name, price, quantity, sellerId }: CreateProductInput) {
     return this.prisma.product.create({
-      data: { name, price, quantity}
+      data: { name, price, quantity, sellerId}
     });
   }
   findAll(query: string) {
