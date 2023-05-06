@@ -39,7 +39,7 @@ export class Product {
 }
 
 export abstract class IQuery {
-    abstract products(): Nullable<Product>[] | Promise<Nullable<Product>[]>;
+    abstract products(query: string): Nullable<Product>[] | Promise<Nullable<Product>[]>;
 
     abstract product(id: number): Nullable<Product> | Promise<Nullable<Product>>;
 

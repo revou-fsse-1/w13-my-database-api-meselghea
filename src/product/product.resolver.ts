@@ -12,10 +12,11 @@ export class ProductResolver {
   create(@Args('createProductInput') createProductInput: CreateProductInput) {
     return this.productService.create(createProductInput);
   }
-
+  
   @Query('products')
-  findAll() {
-    return this.productService.findAll('string');
+  findAll(@Args('query') query: string) {
+    console.log('findAll')
+    return this.productService.findAll(query);
   }
 
   @Query('product')

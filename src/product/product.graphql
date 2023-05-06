@@ -21,7 +21,7 @@ input UpdateProductInput {
 }
 
 type Query {
-  products: [Product]!
+  products(query: String!): [Product]!
   product(id: Int!): Product
 }
 

@@ -24,7 +24,6 @@ export class ProductService {
   findOne(id: number) {
     return this.prisma.product.findUnique({
       where: { id },
-      select:{ name: true, id: true },
     });
   }
     
