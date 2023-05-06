@@ -29,7 +29,7 @@ export class ProductService {
   }
     
 
-  update(id: number,{ name, price, quantity}: UpdateProductInput) {
+  update(id: number,{ name, price, quantity }: UpdateProductInput) {
     return this.prisma.product.update({
     where: { id },
     data: { 
