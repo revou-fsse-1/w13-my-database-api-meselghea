@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { stringify } from 'querystring';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductInput, UpdateProductInput } from 'src/types/graphql';
 
 @Injectable()
 export class ProductService {
   constructor(private prisma: PrismaService) {}
+  create({ name, price, quantity }: CreateProductInput) {
+    return this.prisma.product.create({
+      data: { name, price, quantity}
+    });
+  }
   findAll(query: string) {
     return this.prisma.product.findMany({
       where: {
@@ -16,21 +20,13 @@ export class ProductService {
       },
     });
   }
-  create({ name, price, quantity, location}: CreateProductInput) {
-    return this.prisma.product.create({
-      data: { name, price, quantity, location}
-      });
-
-}
-
-
-
   findOne(id: number) {
     return this.prisma.product.findUnique({
       where: { id },
       select:{ name: true, id: true },
     });
   }
+    
 
   update(id: number,{ name, price, quantity}: UpdateProductInput) {
     return this.prisma.product.update({
