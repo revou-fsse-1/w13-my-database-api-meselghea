@@ -1,7 +1,7 @@
 databases:
   - name: dbmesel
     databaseName: dbmesel
-    user: dbmesel_user
+    user: dbmesel
  services:
  - type: pserv
    name: pgbouncer
