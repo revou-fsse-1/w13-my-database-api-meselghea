@@ -4,11 +4,11 @@ services:
   postgres:
     image: postgres:latest
     ports:
-      - 5829:5829
+      - 5432:5432
     environment:
-      - POSTGRES_DB=railway
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=o8BzJi2r4br7cH9gkfBp
+      - POSTGRES_DB=dbmesel
+      - POSTGRES_USER=dbmesel_user
+      - POSTGRES_PASSWORD=rU0BK1D0mUO59mrvvFArrmH4aMNOyzTo
   pgadmin:
     image: dpage/pgadmin4
     environment: 
