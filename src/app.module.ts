@@ -13,9 +13,8 @@ import { SellerModule } from './seller/seller.module';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      playground: true,
-      introspection: true,
-    //plugins: [ApolloServerPluginLandingPageProductionDefault()],
+      playground: false,
+    plugins: [ApolloServerPluginLandingPageProductionDefault()],
       typePaths: ['./**/*.graphql'],
       definitions: {
         path: join(process.cwd(), 'src/types/graphql.ts'),

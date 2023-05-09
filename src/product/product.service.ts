@@ -11,15 +11,14 @@ export class ProductService {
     });
   }
   findAll(query: string) {
-    return this.prisma.product.findMany({
+    return this.prisma.product.findMany({  
       where: {
         name: {
           contains: query,
           mode: 'insensitive',
         },
       },
-    });
-    
+    }); 
   }
   findOne(id: number) {
     return this.prisma.product.findUnique({
